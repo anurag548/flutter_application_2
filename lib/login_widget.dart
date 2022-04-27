@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_application_2/reuse/reusable_assets.dart';
+import './registration_widget.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -19,11 +21,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            TextField(
-              controller: usernameText,
-              decoration: InputDecoration(
-                  hintText: "Username", border: OutlineInputBorder()),
-            ),
+            reuseIt(usernameText, false, "Enter name"),
 
             //**Password Field */
             TextField(
@@ -33,7 +31,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               autocorrect: false,
               decoration: InputDecoration(
                   hintText: "Password",
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _isHidden ? Icons.visibility : Icons.visibility_off,
@@ -46,14 +44,36 @@ class _LoginWidgetState extends State<LoginWidget> {
                   )),
             ),
             ElevatedButton(child: const Text('Log In'), onPressed: logIn),
+            RichText(
+                text: TextSpan(
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                    text: 'No Account?  ',
+                    children: [
+                  TextSpan(
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegistrationWidget()));
+                        },
+                      text: 'Sign Up',
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Theme.of(context).colorScheme.secondary))
+                ]))
           ])),
     );
   }
 
   Future logIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: usernameText.text.trim(),
-      password: passwordText.text.trim(),
-    );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: usernameText.text.trim(),
+        password: passwordText.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
   }
 }
