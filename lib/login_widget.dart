@@ -1,3 +1,4 @@
+import 'package:flutter_application_2/reuse/reusable_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -23,6 +24,10 @@ class _LoginWidgetState extends State<LoginWidget> {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             reuseIt(usernameText, false, "Enter name"),
 
+            const SizedBox(
+              height: 10,
+            ),
+
             //**Password Field */
             TextField(
               controller: passwordText,
@@ -30,8 +35,13 @@ class _LoginWidgetState extends State<LoginWidget> {
               enableSuggestions: false,
               autocorrect: false,
               decoration: InputDecoration(
+                  labelText: "Enter Password",
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
                   hintText: "Password",
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(28.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.solid)),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _isHidden ? Icons.visibility : Icons.visibility_off,
@@ -43,11 +53,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                     },
                   )),
             ),
+            const SizedBox(
+              height: 10,
+            ),
             ElevatedButton(child: const Text('Log In'), onPressed: logIn),
             RichText(
                 text: TextSpan(
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                    text: 'No Account?  ',
+                    style: const TextStyle(color: Colors.black, fontSize: 16),
+                    text: 'No Account? ',
                     children: [
                   TextSpan(
                       recognizer: TapGestureRecognizer()
@@ -57,9 +70,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                               MaterialPageRoute(
                                   builder: (context) => RegistrationWidget()));
                         },
-                      text: 'Sign Up',
+                      text: "Sign up",
                       style: TextStyle(
-                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.secondary))
                 ]))
           ])),

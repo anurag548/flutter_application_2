@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import './login_widget.dart';
 import './home_widget.dart';
-import './registration_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
