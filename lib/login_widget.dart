@@ -6,7 +6,7 @@ import './registration_widget.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
-
+  @override
   _LoginWidgetState createState() => _LoginWidgetState();
 }
 
@@ -23,15 +23,23 @@ class _LoginWidgetState extends State<LoginWidget> {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             reuseIt(usernameText, false, "Enter name"),
 
+            const SizedBox(
+              height: 10.0,
+            ),
             //**Password Field */
-            TextField(
+            TextFormField(
               controller: passwordText,
               obscureText: _isHidden,
               enableSuggestions: false,
               autocorrect: false,
               decoration: InputDecoration(
+                  labelText: "Password",
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
                   hintText: "Password",
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(28),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.solid)),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _isHidden ? Icons.visibility : Icons.visibility_off,
@@ -46,7 +54,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             ElevatedButton(child: const Text('Log In'), onPressed: logIn),
             RichText(
                 text: TextSpan(
-                    style: TextStyle(color: Colors.black, fontSize: 16),
+                    style: const TextStyle(color: Colors.black, fontSize: 16),
                     text: 'No Account?  ',
                     children: [
                   TextSpan(
